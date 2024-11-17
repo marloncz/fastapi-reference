@@ -2,16 +2,10 @@ import logging
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+
+from fastapi_reference.utils.models import GeneralResponse
 
 logger = logging.getLogger(__name__)
-
-
-class GeneralResponse(BaseModel):
-    """General response model for the API."""
-
-    message: str
-
 
 app = FastAPI()
 
