@@ -20,6 +20,10 @@ python = "~3.11.9"
 
 # Plotting
 seaborn = ">=0.11.2"
+fastapi = "^0.115.5"
+pydantic = "^2.9.2"
+polars = "^1.13.1"
+sqlalchemy = "^2.0.36"
 
 [tool.poetry.group.dev.dependencies]
 # Developement Dependencies
