@@ -1,0 +1,13 @@
+# Changes here will be overwritten by Copier
+_commit: 9f4f57c
+_src_path: git@github.com:marloncz/data-science-project-template
+author_name: Marlon Ziegler
+hydra: false
+package_name: fastapi_reference
+project_description: ''
+project_name: fastapi-reference
+python_version: 3.11.9
+use_direnv: true
+use_docker: true
+use_jupyterlab: true
+

@@ -1,0 +1,10 @@
+name: fastapi_reference
+
+services:
+  fastapi_reference:
+    image: 'fastapi_reference:latest'
+    build:
+      context: ./../
+      dockerfile: docker/fastapi_reference/Dockerfile
+    env_file: ./../.env
+    tty: true
