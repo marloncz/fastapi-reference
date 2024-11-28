@@ -106,6 +106,7 @@ disallow_untyped_calls = false
 show_column_numbers = true
 show_error_codes = true
 ignore_missing_imports = true
+plugins = ["sqlalchemy.ext.mypy.plugin"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
