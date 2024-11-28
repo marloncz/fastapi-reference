@@ -12,7 +12,7 @@ DATABASE_URL = "sqlite:///data/sql_database.db"
 Base = declarative_base()
 
 
-class Product(Base):
+class ProductTable(Base):
     """Class for the products table in the SQL database."""
 
     __tablename__ = "products"
@@ -43,7 +43,7 @@ def init_sql():
 
     # delete all rows in the products table
     # NOTE: this step ensures that the table is cleared before adding new data
-    session.query(Product).delete()
+    session.query(ProductTable).delete()
     session.commit()
 
     # generate mock data and insert it into the products table
@@ -51,7 +51,7 @@ def init_sql():
     product_dicts = df.to_dicts()
 
     for product in product_dicts:
-        new_product = Product(
+        new_product = ProductTable(
             product_id=product["product_id"],
             product_name=product["product_name"],
             product_category=product["product_category"],
