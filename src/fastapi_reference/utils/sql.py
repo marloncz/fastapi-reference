@@ -26,11 +26,14 @@ class Product(Base):
     valid_to = Column(Date, nullable=False)
     price = Column(Float, nullable=False)
     stock = Column(Integer, nullable=False)
+    user_name = Column(String, nullable=False)
+    user_email = Column(String, nullable=False)
 
 
 def init_sql():
     """Initializes the SQLite database with mock data."""
     engine = create_engine(DATABASE_URL)
+    Base.metadata.drop_all(engine)
     # create the tables defined in the Base metadata
     # NOTE: only creates tables if they do not exist
     Base.metadata.create_all(engine)
@@ -57,6 +60,8 @@ def init_sql():
             valid_to=datetime.strptime(product["valid_to"], "%Y-%m-%d"),
             price=product["price"],
             stock=product["stock"],
+            user_name="admin",
+            user_email="admin@mail.com",
         )
         session.add(new_product)
 
