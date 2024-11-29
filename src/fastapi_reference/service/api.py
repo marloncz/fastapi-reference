@@ -133,6 +133,57 @@ async def update_products(body: UpdateProducts):
     return GeneralResponse(message="Products updated successfully.")
 
 
+@app.post("/add_products", status_code=200, response_model=GeneralResponse)
+async def add_products(body: UpdateProducts):
+    """Endpoint for adding new products."""
+    engine = create_engine(DATABASE_URL)
+    session_maker = sessionmaker(bind=engine)
+    session = session_maker()
+    try:
+        existing_products: list[str] = []
+        logger.info("Updating products...")
+        for product in body.products:
+            db_product = (
+                session.query(ProductTable)
+                .filter(ProductTable.product_id == product.product_id)
+                .first()
+            )
+
+            if db_product:
+                existing_products.append(str(db_product.product_id))
+                continue
+
+            new_product = ProductTable(
+                product_id=product.product_id,
+                product_name=product.product_name,
+                product_category=product.product_category,
+                product_description=product.product_description,
+                valid_from=product.valid_from,
+                valid_to=product.valid_to,
+                price=product.price,  # type: ignore
+                stock=product.stock,
+                user_name=body.user_name,
+                user_email=body.user_email,
+            )
+            session.add(new_product)
+
+        session.commit()
+        n_new = len(body.products) - len(existing_products)
+
+    except SQLAlchemyError as e:
+        logger.error("Error: %s", e)
+        session.rollback()
+        raise HTTPException(
+            status_code=500, detail=f"An error occurred while adding products: {str(e)}"
+        ) from e
+    if existing_products:
+        return GeneralResponse(
+            message=f"Added {n_new} new products to DB. "
+            f"Note: Products with IDs {', '.join(existing_products)} already available."
+        )
+    return GeneralResponse(message="Products added successfully.")
+
+
 if __name__ == "__main__":
     import uvicorn
 
