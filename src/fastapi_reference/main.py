@@ -1,6 +1,5 @@
-def main() -> None:
-    """Main entry point for this project."""
+import uvicorn
 
+from fastapi_reference.service.api import app
 
-if __name__ == "__main__":
-    main()
+uvicorn.run(app, host="0.0.0.0", port=8000)
