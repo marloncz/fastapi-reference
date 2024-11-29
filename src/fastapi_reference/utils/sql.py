@@ -1,3 +1,5 @@
+import logging
+import os
 from datetime import datetime
 
 from sqlalchemy import Column, Date, Float, Integer, String, create_engine
@@ -6,8 +8,10 @@ from sqlalchemy.orm import sessionmaker
 
 from fastapi_reference.data.mock_data import generate_mock_data
 
+logger = logging.getLogger(__name__)
+
 # SQLite database stored in the data folder.
-DATABASE_URL = "sqlite:///data/sql_database.db"
+DATABASE_URL = "sqlite:///database/sql_database.db"
 
 Base = declarative_base()
 
@@ -30,8 +34,14 @@ class ProductTable(Base):
     user_email = Column(String, nullable=False)
 
 
-def init_sql():
+def init_local_sql():
     """Initializes the SQLite database with mock data."""
+    if not os.path.exists("database"):
+        # Create the directory
+        os.makedirs("database")
+        logger.info("Directory 'database' created.")
+    else:
+        logger.info("Directory 'database' already exists.")
     engine = create_engine(DATABASE_URL)
     Base.metadata.drop_all(engine)
     # create the tables defined in the Base metadata
@@ -70,4 +80,4 @@ def init_sql():
 
 
 if __name__ == "__main__":
-    init_sql()
+    init_local_sql()
