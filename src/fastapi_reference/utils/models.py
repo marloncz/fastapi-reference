@@ -9,6 +9,12 @@ class GeneralResponse(BaseModel):
     message: str
 
 
+class RandomSample(BaseModel):
+    """Model for requesting a random sample of products."""
+
+    sample_size: int = Field(..., description="Number of samples to generate")
+
+
 class Product(BaseModel):
     """Model for updating / receiving products in the SQL database."""
 
@@ -17,6 +23,7 @@ class Product(BaseModel):
     product_description: str = Field(..., description="Product description")
     product_category: str = Field(..., description="Product category")
     price: float = Field(..., description="Product price in USD")
+    stock: int = Field(..., description="Product stock")
     valid_from: date = Field(
         ..., description="Date in format 'YYYY-MM-DD' when the product is valid from"
     )

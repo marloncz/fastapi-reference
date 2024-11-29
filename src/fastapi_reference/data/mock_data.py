@@ -51,12 +51,12 @@ def generate_mock_data(n_samples: int) -> pl.DataFrame:
         {
             "product_id": str(i).zfill(5),
             "product_name": generate_random_name(),
-            "product_category": f"Category {random.choice(string.ascii_uppercase[0:6])}",
             "product_description": lorem.sentence(),
-            "valid_from": generate_random_date("2015-01-01", "2020-01-01"),
-            "valid_to": generate_random_date("2020-02-01", "2025-01-01"),
+            "product_category": f"Category {random.choice(string.ascii_uppercase[0:6])}",
             "price": round(random.uniform(5.0, 500.0), 2),
             "stock": random.randint(1, 100),
+            "valid_from": generate_random_date("2015-01-01", "2020-01-01"),
+            "valid_to": generate_random_date("2020-02-01", "2025-01-01"),
         }
         for i in range(1, n_samples + 1)
     ]
