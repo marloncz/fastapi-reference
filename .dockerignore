@@ -8,6 +8,9 @@
 !src
 !conf
 
+# Only needed for local SQLite DB
+!database
+
 # ignore potentially sensitive credentials files
 conf/**/*credentials*
 

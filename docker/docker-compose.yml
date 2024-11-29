@@ -7,4 +7,6 @@ services:
       context: ./../
       dockerfile: docker/fastapi_reference/Dockerfile
     env_file: ./../.env
+    ports:
+      - '8000:8000'
     tty: true
