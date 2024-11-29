@@ -20,7 +20,7 @@ class Product(BaseModel):
 
     product_id: str = Field(..., description="Product ID")
     product_name: str = Field(..., description="Product name")
-    product_description: str = Field(..., description="Product description")
+    product_description: str | None = Field(..., description="Product description")
     product_category: str = Field(..., description="Product category")
     price: float = Field(..., description="Product price in USD")
     stock: int = Field(..., description="Product stock")
