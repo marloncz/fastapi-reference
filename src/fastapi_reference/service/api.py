@@ -50,6 +50,7 @@ async def receive_sample_products(body: RandomSample):
     Returns:
         The status of the service.
     """
+    logger.info("Generating mock data with %s samples...", body.sample_size)
     mock_data = generate_mock_data(body.sample_size)
     products_list = mock_data.to_dicts()
     return ReceiveProducts(products=[Product(**product) for product in products_list])
@@ -65,6 +66,7 @@ async def receive_products_by_id(body: GetProductsRequest):
     engine = create_engine(DATABASE_URL)
     session_maker = sessionmaker(bind=engine)
     session = session_maker()
+    logger.info("Getting products with IDs: %s", ", ".join(body.product_ids))
     products = (
         session.query(ProductTable).filter(ProductTable.product_id.in_(body.product_ids)).all()
     )
@@ -93,6 +95,7 @@ async def update_products(body: UpdateProducts):
     session = session_maker()
     try:
         missing_products = []
+        logger.info("Updating products...")
         for product in body.products:
             db_product = (
                 session.query(ProductTable)
