@@ -115,13 +115,18 @@ async def update_products(body: UpdateProducts):
                 session.commit()
             else:
                 missing_products.append(product.product_id)
+        n_update = len(body.products) - len(missing_products)
     except SQLAlchemyError as e:
         logger.error("Error: %s", e)
         session.rollback()
         raise HTTPException(
             status_code=500, detail=f"An error occurred while updating products: {str(e)}"
         ) from e
-
+    if missing_products:
+        return GeneralResponse(
+            message=f"Updated {n_update} products. "
+            f"Note: Products with IDs {', '.join(missing_products)} could not be found."
+        )
     return GeneralResponse(message="Products updated successfully.")
 
 
